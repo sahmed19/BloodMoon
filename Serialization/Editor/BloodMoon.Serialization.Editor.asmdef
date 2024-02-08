@@ -1,0 +1,18 @@
+{
+    "name": "BloodMoon.Serialization.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:081659be3a75cec46be21930e5e8f474"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
