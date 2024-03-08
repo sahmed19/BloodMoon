@@ -18,8 +18,6 @@ namespace BloodMoon.Serialization
 
             TextAsset textAsset = Resources.Load<TextAsset>(resourcesPath);
 
-            Debug.Log(textAsset.text.Length);
-
             if (textAsset == null)
             {
                 Debug.LogError($"Could not find file at path [{resourcesPath}]");
@@ -30,7 +28,7 @@ namespace BloodMoon.Serialization
 
 
             string textAssetString = textAsset.text;
-            string[] splitLines = textAssetString.Split("\n"[0]);
+            string[] splitLines = textAssetString.Split('\n');
 
             try
             {
