@@ -1,5 +1,3 @@
-
-
 namespace BloodMoon.Utils
 {
     struct BitFlag64
