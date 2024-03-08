@@ -19,6 +19,12 @@ namespace BloodMoon.RenderUtility
             Indigo,
             Violet
         }
+        public enum ColorSourceType
+        {
+            Manual,
+            Rainbow,
+            Other
+        }
         static readonly Color[] COLORS =
         {
             new Color(0.8f, 0.3f, 0.3f),
@@ -32,11 +38,29 @@ namespace BloodMoon.RenderUtility
         static Color Rainbow2Color(RainbowColor color) => COLORS[(int)color];
 
         [TitleGroup("Color")]
-        [LabelText("Use Manual?"), ToggleLeft, SerializeField] bool UseManualBaseColor = false;
-        [HideLabel, ShowIf("UseManualBaseColor"), OnValueChanged("Editor_RefreshMaterial"), SerializeField] Color BaseColorManual = Color.white;
-        [HideLabel, HideIf("UseManualBaseColor"), OnValueChanged("Editor_RefreshMaterial"), SerializeField] RainbowColor BaseColorSelect = RainbowColor.Red;
+        [SerializeField] ColorSourceType ColorSource = ColorSourceType.Rainbow;
 
-        Color BaseColor => UseManualBaseColor ? BaseColorManual : Rainbow2Color(BaseColorSelect);
+        bool IsManual => ColorSource == ColorSourceType.Manual;
+        bool IsRainbow => ColorSource == ColorSourceType.Rainbow;
+        bool IsOther => ColorSource == ColorSourceType.Other;
+
+        [HideLabel, ShowIf("IsManual"), OnValueChanged("Editor_RefreshMaterial"), SerializeField] Color BaseColorManual = Color.white;
+        [HideLabel, ShowIf("IsRainbow"), OnValueChanged("Editor_RefreshMaterial"), SerializeField] RainbowColor BaseColorSelect = RainbowColor.Red;
+        [HideLabel, ShowIf("IsOther"), OnValueChanged("Editor_RefreshMaterial"), SerializeField] InstancedMaterialHandler OtherMaterialHandler = null;
+
+        Color GetBaseColor()
+        {
+            switch (ColorSource)
+            {
+                default:
+                case ColorSourceType.Manual:
+                    return BaseColorManual;
+                case ColorSourceType.Rainbow:
+                    return Rainbow2Color(BaseColorSelect);
+                case ColorSourceType.Other:
+                    return OtherMaterialHandler != null ? OtherMaterialHandler.GetBaseColor() : Color.white;
+            }
+        }
 
         Renderer mRenderer;
         Material mInstancedMaterial;
@@ -44,13 +68,13 @@ namespace BloodMoon.RenderUtility
 
         public void SetColor(RainbowColor rainbowColor)
         {
-            UseManualBaseColor = false;
+            ColorSource = ColorSourceType.Rainbow;
             BaseColorSelect = rainbowColor;
             RefreshMaterial();
         }
         public void SetColor(Color color)
         {
-            UseManualBaseColor = true;
+            ColorSource = ColorSourceType.Manual;
             BaseColorManual = color;
             RefreshMaterial();
         }
@@ -72,7 +96,7 @@ namespace BloodMoon.RenderUtility
 
         void RefreshMaterial()
         {
-            mInstancedMaterial.SetColor(ID_BASE_COLOR, BaseColor);
+            mInstancedMaterial.SetColor(ID_BASE_COLOR, GetBaseColor());
         }
 
 #if UNITY_EDITOR
