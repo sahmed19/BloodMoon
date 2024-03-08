@@ -17,11 +17,14 @@ namespace BloodMoon.Serialization
                 TSVData.Clear();
 
             TextAsset textAsset = Resources.Load<TextAsset>(resourcesPath);
+
+            Debug.Log(textAsset.text.Length);
+
             if (textAsset == null)
             {
-                throw new Exception($"Could not find file at path [{resourcesPath}]");
+                Debug.LogError($"Could not find file at path [{resourcesPath}]");
+                return false;
             }
-
 
             int longLength = 0;
 
@@ -29,20 +32,17 @@ namespace BloodMoon.Serialization
             string textAssetString = textAsset.text;
             string[] splitLines = textAssetString.Split("\n"[0]);
 
-
-            for (int l = 0; l < splitLines.Length; l++)
-            {
-                string line = splitLines[l].Trim();
-                if (line.Length < 1) continue;
-
-                string[] splitLine = length == -1 ? line.Split(split) : line.Split(split, length);
-                TSVData.Add(splitLine);
-                longLength = Math.Max(longLength, splitLine.Length);
-            }
-
             try
             {
+                for (int l = 0; l < splitLines.Length; l++)
+                {
+                    string line = splitLines[l].Trim();
+                    if (line.Length < 1) continue;
 
+                    string[] splitLine = length == -1 ? line.Split(split) : line.Split(split, length);
+                    TSVData.Add(splitLine);
+                    longLength = Math.Max(longLength, splitLine.Length);
+                }
             }
             catch (Exception e)
             {
