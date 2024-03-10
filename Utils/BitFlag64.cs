@@ -1,7 +1,9 @@
 namespace BloodMoon.Utils
 {
-    struct BitFlag64
+    public struct BitFlag64
     {
+        public static readonly BitFlag64 zero = new BitFlag64();
+        public static readonly BitFlag64 one = new BitFlag64(ulong.MaxValue);
         ulong bits;
 
         public BitFlag64(ulong b = 0)
