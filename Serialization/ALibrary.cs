@@ -15,8 +15,6 @@ namespace BloodMoon.Serialization
                 if (!mINSTANCE)
                 {
                     mINSTANCE = Resources.Load<T>("Libraries/" + GetProperFileName());
-                    if (mINSTANCE)
-                        mINSTANCE.Initialize();
                 }
                 return mINSTANCE;
             }
@@ -37,8 +35,5 @@ namespace BloodMoon.Serialization
         {
             return "LIB_" + typeof(T).Name;
         }
-        
-        protected virtual void Initialize() { }
-
     }
 }

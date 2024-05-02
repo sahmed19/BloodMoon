@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectSwallowFalls
+namespace BloodMoon.Utils
 {
     public static class TransformUtils
     {
