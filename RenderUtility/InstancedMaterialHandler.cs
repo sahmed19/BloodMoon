@@ -64,6 +64,7 @@ namespace BloodMoon.RenderUtility
 
         Renderer mRenderer;
         Material mInstancedMaterial;
+        float mAlpha = 1.0f;
         static readonly int ID_BASE_COLOR = Shader.PropertyToID("_BaseColor");
 
         public void SetColor(RainbowColor rainbowColor)
@@ -76,6 +77,13 @@ namespace BloodMoon.RenderUtility
         {
             ColorSource = ColorSourceType.Manual;
             BaseColorManual = color;
+            RefreshMaterial();
+        }
+
+        public void SetAlpha(float alpha)
+        {
+            mAlpha = alpha;
+            BaseColorManual.a = alpha;
             RefreshMaterial();
         }
 
