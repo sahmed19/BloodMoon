@@ -17,7 +17,10 @@ namespace BloodMoon.RenderUtility
             Green,
             Blue,
             Indigo,
-            Violet
+            Violet,
+            White,
+            Black,
+            Gray
         }
         public enum ColorSourceType
         {
@@ -33,7 +36,10 @@ namespace BloodMoon.RenderUtility
             new Color(0.3f, 0.8f, 0.3f),
             new Color(0.3f, 0.3f, 0.8f),
             new Color(0.3f, 0.3f, 0.7f),
-            new Color(0.7f, 0.3f, 0.8f)
+            new Color(0.7f, 0.3f, 0.8f),
+            new Color(1.0f, 1.0f, 1.0f),
+            new Color(0.0f, 0.0f, 0.0f),
+            new Color(0.5f, 0.5f, 0.5f)
         };
         static Color Rainbow2Color(RainbowColor color) => COLORS[(int)color];
 

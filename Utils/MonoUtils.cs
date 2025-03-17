@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace BloodMoon.Utils
 {
@@ -19,6 +20,25 @@ namespace BloodMoon.Utils
         {
             if(!predicate.Invoke())
                 yield return null;
+        }
+
+        public static void StopAndStartCoroutine(this MonoBehaviour mono, IEnumerator instance, IEnumerator coroutine)
+        {
+            if (instance != null)
+                mono.StopCoroutine(instance);
+
+            instance = coroutine;
+            mono.StartCoroutine(instance);
+        }
+
+        public static IEnumerator LoopOverDuration(float duration, Action<float> response)
+        {
+            for (float t = 0; t < 1.0f; t += Time.deltaTime / duration)
+            {
+                response.Invoke(t);
+                yield return null;
+            }
+            response.Invoke(1.0f);
         }
 
         public static int SiblingIndexComparison<T>(T c1, T c2) where T : Component

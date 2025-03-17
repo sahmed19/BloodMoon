@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Linq;
 
 namespace BloodMoon.Serialization
 {
@@ -14,7 +15,7 @@ namespace BloodMoon.Serialization
             {
                 if (!mINSTANCE)
                 {
-                    mINSTANCE = Resources.Load<T>("Libraries/" + GetProperFileName());
+                    mINSTANCE = Resources.LoadAll<T>("")?.First();
                 }
                 return mINSTANCE;
             }
@@ -28,12 +29,7 @@ namespace BloodMoon.Serialization
             return INSTANCE;
         }
 
-        [InfoBox("This file MUST be placed in a Resources/Libraries directory")]
         [ShowInInspector]
         public T Instance => INSTANCE;
-        static string GetProperFileName()
-        {
-            return "LIB_" + typeof(T).Name;
-        }
     }
 }
