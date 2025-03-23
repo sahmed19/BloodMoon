@@ -31,6 +31,39 @@ namespace BloodMoon.Utils
             mono.StartCoroutine(instance);
         }
 
+        public static IEnumerator TweenOneMinus(this MonoBehaviour mono, Action<float> action, float duration)
+        {
+            var routine = CR_Tween(action, duration);
+            mono.StartCoroutine(routine);
+            return routine;
+        }
+        private static IEnumerator CR_TweenOneMinus(Action<float> action, float duration)
+        {
+            for (float t = 0; t < 1.0f; t += Time.deltaTime / duration)
+            {
+                action(1f-t);
+                yield return null;
+            }
+            action(0f);
+        }
+
+        public static IEnumerator Tween(this MonoBehaviour mono, Action<float> action, float duration)
+        {
+            var routine = CR_Tween(action, duration);
+            mono.StartCoroutine(routine);
+            return routine;
+        }
+
+        private static IEnumerator CR_Tween(Action<float> action, float duration)
+        {
+            for(float t = 0; t < 1.0f; t += Time.deltaTime/duration)
+            {
+                action(t);
+                yield return null;
+            }
+            action(1f);
+        }
+
         public static IEnumerator LoopOverDuration(float duration, Action<float> response)
         {
             for (float t = 0; t < 1.0f; t += Time.deltaTime / duration)
