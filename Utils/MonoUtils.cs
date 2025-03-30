@@ -64,16 +64,6 @@ namespace BloodMoon.Utils
             action(1f);
         }
 
-        public static IEnumerator LoopOverDuration(float duration, Action<float> response)
-        {
-            for (float t = 0; t < 1.0f; t += Time.deltaTime / duration)
-            {
-                response.Invoke(t);
-                yield return null;
-            }
-            response.Invoke(1.0f);
-        }
-
         public static int SiblingIndexComparison<T>(T c1, T c2) where T : Component
         {
             var t1 = c1.transform;
