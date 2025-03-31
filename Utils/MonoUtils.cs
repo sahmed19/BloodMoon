@@ -8,6 +8,19 @@ namespace BloodMoon.Utils
 {
     public static class MonoUtils
     {
+        public static Vector2 LocalToCanvasSpacePosition(this RectTransform rectTransform) => LocalToCanvasSpacePosition(rectTransform, Vector2.zero);
+        public static Vector2 LocalToCanvasSpacePosition(this RectTransform rectTransform, Vector2 localCanvasPoint)
+        {
+            var worldPos = rectTransform.TransformPoint(localCanvasPoint);
+            var canvas = rectTransform.GetComponentInParent<Canvas>();
+            var canvasRect = canvas.GetComponent<RectTransform>().rect;
+            var camera = canvas.worldCamera;
+            var viewportPos = camera.WorldToViewportPoint(worldPos);
+            var ret = new Vector2(viewportPos.x * canvasRect.width, viewportPos.y * canvasRect.height);
+            return ret;
+            
+        }
+
         public static void DestroyAllGameObjectsOfType<T>() where T : Component
         {
             foreach(var obj in GameObject.FindObjectsOfType<T>())
