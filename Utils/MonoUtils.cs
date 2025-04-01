@@ -46,7 +46,7 @@ namespace BloodMoon.Utils
 
         public static IEnumerator TweenOneMinus(this MonoBehaviour mono, Action<float> action, float duration)
         {
-            var routine = CR_Tween(action, duration);
+            var routine = CR_TweenOneMinus(action, duration);
             mono.StartCoroutine(routine);
             return routine;
         }
